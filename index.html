@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html ng-app="warmMeal">
+<!-- <html lang="en" ng-app> -->
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>wWarm Meal</title>
+	
+	<link href="styles/stylesheet.css" rel="stylesheet" type="text/css" />
+	<link href="/node_modules/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
+	<link href="/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<link rel="icon" href="/img/soup-two.png" />
+    <script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyDZKE9IdRZUjfcW2mcmxmq_FntF_TsuEo0",
+            authDomain: "hotmeals-bae8e.firebaseapp.com",
+            databaseURL: "https://hotmeals-bae8e.firebaseio.com",
+            projectId: "hotmeals-bae8e",
+            storageBucket: "hotmeals-bae8e.appspot.com",
+            messagingSenderId: "110839985775"
+        };
+    firebase.initializeApp(config);
+        </script>
+    <script src="/node_modules/angular/angular.min.js"></script>
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+	<!-- <script src="/node_modules/angular-animate/angular-animate.min.js"></script> -->
+	<!-- <script src="/node_modules/angular-touch/angular-touch.js"></script> -->
+	<!-- <script src="/node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script> -->
+	<!-- Local Routes wasnt working -->
+          <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
+      <script src="script.js"></script>
+	<script src ="app/app.js"></script>
+</head>
+
+<body ng-controller="warmMealController">
+	<main ng-view></main>
+
+	<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+</body>
+</html>
