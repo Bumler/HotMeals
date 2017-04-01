@@ -20,7 +20,7 @@
   .hero .gradient {
     content: '';
     height: 100vh;
-    background-image: linear-gradient(to bottom right, #002f4b, #dc4225);
+    background-image: linear-gradient(to bottom right, #c73915, #e7b439);
     opacity: .8; }
   .hero .hero-text {
     position: absolute;
