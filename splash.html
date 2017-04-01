@@ -9,7 +9,20 @@
 	<link href="/node_modules/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
 	<link href="/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 	<link rel="icon" href="/img/soup-two.png" />
-	<script src="/node_modules/angular/angular.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyDZKE9IdRZUjfcW2mcmxmq_FntF_TsuEo0",
+            authDomain: "hotmeals-bae8e.firebaseapp.com",
+            databaseURL: "https://hotmeals-bae8e.firebaseio.com",
+            projectId: "hotmeals-bae8e",
+            storageBucket: "hotmeals-bae8e.appspot.com",
+            messagingSenderId: "110839985775"
+        };
+    firebase.initializeApp(config);
+        </script>
+    <script src="/node_modules/angular/angular.js"></script>
 	<script src ="app\app.js"></script>
 
 	<!-- Latest compiled and minified JavaScript -->
