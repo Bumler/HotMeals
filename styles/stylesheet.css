@@ -1,0 +1,47 @@
+.hero {
+  height: 100vh;
+  margin-left: -15px;
+  margin-right: -15px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: relative;
+  overflow: hidden; }
+  .hero img {
+    position: absolute;
+    height: auto;
+    height: 100vh;
+    width: 100%;
+    display: block;
+    top: -9999px;
+    bottom: -9999px;
+    left: -9999px;
+    right: -9999px;
+    margin: auto; }
+  .hero .gradient {
+    content: '';
+    height: 100vh;
+    background-image: linear-gradient(to bottom right, #002f4b, #dc4225);
+    opacity: .8; }
+  .hero .hero-text {
+    position: absolute;
+    z-index: 999;
+    color: #fff;
+    top: 70%;
+    left: 0;
+    right: 0;
+    text-align: center; }
+    @media screen and (max-width: 768px) {
+      .hero .hero-text {
+        top: 60%; } }
+    .hero .hero-text h1 {
+      font-size: 7rem;
+      font-weight: 300; }
+      @media screen and (max-width: 425px) {
+        .hero .hero-text h1 {
+          font-size: 4rem; } }
+    .hero .hero-text h2 {
+      font-size: 3.5rem;
+      font-weight: 300; }
+      @media screen and (max-width: 425px) {
+        .hero .hero-text h2 {
+          font-size: 2rem; } }
