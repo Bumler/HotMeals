@@ -49,11 +49,26 @@ warmMeal.controller('signUpController', function($scope){
 	$scope.confirmPassword = "";
 
 	function hasValidEntries(){
-		if($scope.name && $scope.lastName && $scope.email && $scope.password && $scope.confirmPassword && hasValidPassword()) {
+		if(!$scope.name) {
+			alert('First Name cannot be blank.');
+			return false;
+		} else if (!$scope.lastName) {
 			// All the variables are not empty and have the same correct password
-			return true;
+			alert('Last Name cannot be blank.');
+			return false;
+		} else if (!$scope.email) {
+			alert('Email cannot be blank.');
+			return false;
+		} else if(!$scope.password) {
+			alert('Password cannot be blank.');
+			return false;
+		} else if(!$scope.confirmPassword) {
+			alert('Password cannot be blank.');
+			return false;
+		} else if (!hasValidPassword()) {
+			return false;
 		}
-		return false;
+		return true;
 	}
 
 	// Password must equal the confirm password and be more than 6 characters
@@ -71,13 +86,12 @@ warmMeal.controller('signUpController', function($scope){
 		// This allows new users to be able to get a Hot Meal right away without us having to set the date to null initially.
 		var initialDate = new Date();
 		initialDate.setDate(initialDate.getDate()-1);
-		
+		// var userId = firebase.auth().uid
 
 		var database = firebase.database();
 		console.log("DATABASE = " + database);
-
-		var test = firebase.database().ref('users/' + userId);
-		test.set({
+		console.log("userid = " + userId);
+		firebase.database().ref('users/' + userId).set({
 			firstName: $scope.name,
 			lastName: $scope.lastName,
 			email: $scope.email,
@@ -88,9 +102,11 @@ warmMeal.controller('signUpController', function($scope){
 		});
 	}
 	function createAccount() {
+		var initialDate = new Date();
+		initialDate.setDate(initialDate.getDate()-1);
 		var user = firebase.auth().createUserWithEmailAndPassword($scope.email, $scope.password).catch(function(error) {
 				// Handle Errors here.
-				var errorCode = error.code;
+		 		var errorCode = error.code;
 				var errorMessage = error.message;
 				console.log("error creating user: " + errorMessage);
 
@@ -98,21 +114,28 @@ warmMeal.controller('signUpController', function($scope){
 					alert('The password is too weak.');
 				} else {
 					alert(errorMessage);
-				}
+				}			
 			});
-		console.log("returning user " + user);
-		return user;
+		// return user;
 	}
 
 	$scope.submit = function(){
 		console.log("check");
-		// if (hasValidEntries()) {
-		// 	//Create a new user in Firebase
-		// 	var user = createAccount();
-
-		// 	writeUserData(user);		
-		// 	// TODO: Goto the homepage.
-		// }
+		if (hasValidEntries()) {
+			//Create a new user in Firebase
+			console.log("about to create account");
+			createAccount();
+			firebase.auth().onAuthStateChanged(function(user) {
+				if (user) {
+					console.log("THERE'S A USER");
+				    // See if user exists in database
+				    var userInfo = firebase.database().ref('users').child(user.uid);
+				    console.log("userInfo = " + userInfo);
+				    writeUserData(user.uid);				    
+				}
+			});
+			// TODO: Goto the homepage.
+		}
 	};
 });
 
@@ -122,20 +145,20 @@ warmMeal.controller('loginController', function($scope){
 
 	$scope.login = function(){
 		//TODO: Verify through facial recognition and then go to new page
+		console.log("login pressed");
 		var user = firebaseSignIn();
 	};
 
 	function firebaseSignIn() {
-		var user = firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+		var user = firebase.auth().signInWithEmailAndPassword($scope.email, $scope.password).catch(function(error) {
 		  // Handle Errors here.
 		  var errorMessage = error.message;
 		  console.log("error logging in user: " + errorMessage);
 		  alert(errorMessage);
 		});
+		console.log("user = " + user);
 		return user;
-	}
-	
-
+	}	
 });
 
 warmMeal.controller('mapController', function($scope){
