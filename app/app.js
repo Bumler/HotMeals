@@ -1,4 +1,4 @@
-var warmMeal = angular.module('warmMeal', ['ngRoute']);
+var warmMeal = angular.module('warmMeal', ['ngRoute', 'ngMap']);
 
 
 warmMeal.config(['$routeProvider', function($routeProvider){
@@ -138,6 +138,12 @@ warmMeal.controller('loginController', function($scope){
 
 });
 
-warmMeal.controller('mapController', function($scope){
+warmMeal.controller('mapController', function($scope, NgMap){
+$scope.googleMapsUrl="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXCvRVF0uDHz353OEUE8_NhTSKh2p4DBI";
 
+  NgMap.getMap().then(function(map) {
+    console.log(map.getCenter());
+    console.log('markers', map.markers);
+    console.log('shapes', map.shapes);
+  });
 });
