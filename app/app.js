@@ -13,8 +13,9 @@ warmMeal.config(['$routeProvider', function($routeProvider){
 			templateUrl: 'views/signup.html',
 			controller: 'signUpController'
 		})
-		.when('/map',{
-			templateUrl: 'views/map.html'
+		.when('/noavailablemeal',{
+			templateUrl: 'views/nextMealAvailability.html',
+			controller: 'availableController'
 		})
 		.otherwise({
 			redirectTo: '/'
@@ -28,6 +29,11 @@ warmMeal.config(['$routeProvider', function($routeProvider){
 
 warmMeal.controller('warmMealController', function($scope){
 	$scope.message = 'test';
+});
+
+warmMeal.controller('availableController', function($scope){
+	$scope.time = "11:59 PM";
+	$scope.date = "Tomorrow";
 });
 
 warmMeal.controller('signUpController', function($scope){
@@ -102,4 +108,3 @@ warmMeal.controller('signUpController', function($scope){
 		}
 	};
 });
-
