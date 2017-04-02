@@ -18,7 +18,7 @@ warmMeal.config(['$routeProvider', function($routeProvider){
 		templateUrl: 'views/nextMealAvailability.html',
 		controller: 'availableController'
 	})
-	.when('/noavailablemeal',{
+	.when('/login',{
 		templateUrl: 'views/login.html',
 		controller: 'loginController'
 	})
