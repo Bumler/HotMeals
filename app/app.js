@@ -22,11 +22,15 @@ warmMeal.config(['$routeProvider', function($routeProvider){
 		templateUrl: 'views/login.html',
 		controller: 'loginController'
 	})
+	.when('/verify',{
+		templateUrl: 'views/verifySelection.html'
+	})
 	.otherwise({
 		redirectTo: '/'
 	});
 
 }]);
+
 
 // WarmMeal.run(function(){
 // 	//fires at run-time
