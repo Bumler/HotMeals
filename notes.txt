@@ -1,4 +1,4 @@
-cd devworkspace\LAHacks
+cd documents/github\LAHacks
 Browser-sync start --server --directory --files “**/*”
 
 node-sass -o styles style/stylesheet.scss
