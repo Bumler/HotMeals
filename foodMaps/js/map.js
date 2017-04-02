@@ -1,5 +1,5 @@
 // Taking care of search bar 
-console.log("check");
+
 
 $("#foodpref-text-form")
   .focus(function() {
@@ -35,6 +35,7 @@ fpbutton.addEventListener("click", function(){
 
 function initMap() {
 
+	console.log("check");
 	// Options for the google map that will be displayed
 	// Center should correspond to the users' current location
 	var mapOptions = {
