@@ -3,12 +3,10 @@
 			<div class="container-fluid absolute top-layer hero-text">
 				<div class="row">
 					<h2>You have selected</h2>
-					<h1>**Restaurant Name**</h1>
+					<h1 id="resto-name">**Restaurant Name**</h1>
 				</div>
 
 				<div class="row huge-y-margin">
-					<h2>**Address**</h2>
-					<h2>**Distance** miles from your location!</h2>
 					<h2>Voucher will expire today at **Time**</h2>
 				</div>
 
@@ -29,4 +27,7 @@
 			<img src="img\splash-pic.jpg">
 			<div class="gradient"></div>
 		</div>
+	<script type="text/javascript">
+		document.getElementById("resto-name").innerHTML = decodeURI(window.location.href.substr(window.location.href.indexOf("?name") + 6));
+	</script>
 	</div>

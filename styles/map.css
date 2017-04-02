@@ -73,8 +73,20 @@ html, body {
   max-width: 200px;
 }
 
+#confirm-sel-button{
+  background-color: #9a2d19;
+  font-family: Montserrat;
+  color: #eee4d7;
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  max-width: 200px;
+  z-index: 3;
 
-
+}
+#confirm-sel-button:hover {
+  background-color: #c73915;
+}
 
 
 
