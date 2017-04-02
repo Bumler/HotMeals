@@ -19,22 +19,33 @@
 
           </fieldset>
           <div class="y-margin row">
-              <h3>Photo-Id Authentication</h3>
+            <h3>Photo-Id Authentication</h3>
           </div>
-          <div class="row photo-auth container">
-            <span class="camera col-md-2">
-                <video id="video">Video stream not available.</video>
-                <button id="startbutton">Take photo</button> 
-            </span>
-            <span> 
-            <canvas id="canvas">
-            </canvas>
-            </span>
-            <span class="output col-md-2">
-                <img id="photo" alt="The screen capture will appear in this box."> 
-            </span>
+          <div class="row">
+            <div id="webcam" ng-if="vm.showweb">
+              <webcam channel="vm.webcam.channel"
+              on-streaming="vm.webcam.onSuccess()"
+              on-error="vm.webcam.onError(err)"
+              on-stream="vm.webcam.onStream(stream)"></webcam>
+              <button class="btn btn-default" type="button" ng-click="vm.webcam.makeSnapshot()">Capture</button>
+              <canvas ng-hide="true" id="snapshot" width="200" height="200"></canvas>
+            </div>
+            <img data-ng-src="{{'data:' + vm.fotoContentType + ';base64,' + vm.photo}}" style="max-height: 100px;" ng-if="vm.photo"/>
+            <div id="webcam" ng-if="showweb">
+              <webcam channel="webcam.channel"
+              on-streaming="webcam.onSuccess()"
+              on-error="webcam.onError(err)"
+              on-stream="webcam.onStream(stream)"></webcam>
+
+              <button class="button" type="button" ng-click="webcam.makeSnapshot()" style="width: 125px"><span class="glyphicon glyphicon-camera"></span></button>
+              <canvas ng-hide="true" id="snapshot" width="200" height="200"></canvas>
+            </div>
+            
+            <img data-ng-src="{{'data:' + fotoContentType + ';base64,' + photo}}" style="max-height: 100px;" ng-if="photo"/>
+
           </div>
-          <div class="row sy-margin">
+
+          <div class="row">
             <button type="button" class="button" ng-click="submit()">Log In</button> 
           </div>
         </div>  
