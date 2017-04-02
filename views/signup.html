@@ -34,6 +34,16 @@
 					</fieldset>
 
 					<div class="row yy-margin ">
+
+       <div id="webcam" ng-if="vm.showweb">
+        <webcam channel="vm.webcam.channel"
+        on-streaming="vm.webcam.onSuccess()"
+        on-error="vm.webcam.onError(err)"
+        on-stream="vm.webcam.onStream(stream)"></webcam>
+        <button class="btn btn-default" type="button" ng-click="vm.webcam.makeSnapshot()">Capture</button>
+        <canvas ng-hide="true" id="snapshot" width="200" height="200"></canvas>
+      </div>
+      <img data-ng-src="{{'data:' + vm.fotoContentType + ';base64,' + vm.photo}}" style="max-height: 100px;" ng-if="vm.photo"/>
            <div id="webcam" ng-if="showweb">
             <webcam channel="webcam.channel"
             on-streaming="webcam.onSuccess()"
