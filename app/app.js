@@ -47,6 +47,7 @@ warmMeal.controller('signUpController', function($scope, $location){
 	$scope.email = "";
 	$scope.password = "";
 	$scope.confirmPassword = "";
+	$scope.photoId = null;
 
 	function hasValidEntries(){
 		if(!$scope.name) {
@@ -65,6 +66,8 @@ warmMeal.controller('signUpController', function($scope, $location){
 		} else if(!$scope.confirmPassword) {
 			alert('Password cannot be blank.');
 			return false;
+		} else if (!$scope.photoId){
+			//TODO return false once we make photoID not null 
 		} else if (!hasValidPassword()) {
 			return false;
 		}
@@ -98,7 +101,7 @@ warmMeal.controller('signUpController', function($scope, $location){
 			isBanned: false,
 			lastClaimedCode: initialDate
 		    // TODO: Send in photo url obtained from the camera once we integrate it with the signup process.
-		    // photoID: imageUrl
+		    // photoId: $scope.photoId
 		});
 	}
 	function createAccount() {
