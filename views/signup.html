@@ -1,5 +1,5 @@
 
- <link rel="stylesheet" href="styles/main.css" type="text/css" media="all">
+<link rel="stylesheet" href="styles/main.css" type="text/css" media="all">
 <div class="container-fluid font-color">
 	<div class="hero">
 		<div class="container-fluid absolute hero-text top-layer signup-form more-space">
@@ -32,145 +32,37 @@
 						</div>
 
 					</fieldset>
-					<div class="y-margin row">
-		              <h3>Photo-Id Authentication</h3>
-		          </div>
-		          <div class="row photo-auth container">
-		            <span class="camera col-md-2">
-		                <video id="video">Video stream not available.</video>
-		                <button id="startbutton">Take photo</button> 
-		            </span>
-		            <span> 
-		            <canvas id="canvas">
-		            </canvas>
-		            </span>
-		            <span class="output col-md-2">
-		                <img id="photo" alt="The screen capture will appear in this box."> 
-		            </span>
-		          </div>
-		          <div class="row sy-margin">
-		            <button type="button" class="button" ng-click="submit">Create Account</button> 
-		          </div>
-				</div>	
-			</div>
-		</div>
-		<div class="gradient"></div>
-	</div>
+
+					<div class="row yy-margin ">
+
+<!--             <div ng-if="takingPhoto">
+             <webcam channel="vm.webcam.channel"
+                            on-streaming="vm.webcam.onSuccess()"
+                            on-error="vm.webcam.onError(err)"
+                            on-stream="vm.webcam.onStream(stream)">>
+           </webcam>
+         </div>     
+       -->
+       <div id="webcam" ng-if="vm.showweb">
+        <webcam channel="vm.webcam.channel"
+        on-streaming="vm.webcam.onSuccess()"
+        on-error="vm.webcam.onError(err)"
+        on-stream="vm.webcam.onStream(stream)"></webcam>
+        <button class="btn btn-default" type="button" ng-click="vm.webcam.makeSnapshot()">Capture</button>
+        <canvas ng-hide="true" id="snapshot" width="200" height="200"></canvas>
+      </div>
+      <img data-ng-src="{{'data:' + vm.fotoContentType + ';base64,' + vm.photo}}" style="max-height: 100px;" ng-if="vm.photo"/>
+
+      <div class="row">
+       <button type="button" class="button" style="width: 125px" ng-click="vm.webcam.makeSnapshot()"><span class="glyphicon glyphicon-camera"></span></button>
+     </div>
+
+     <div class="row yy-margin">
+      <button type="button" class="button" ng-click="submit">Create Account</button> 
+    </div>
+  </div>	      
 </div>
-
-<script type="text/javascript">
-  // The width and height of the captured photo. We will set the
-  // width to the value defined here, but the height will be
-  // calculated based on the aspect ratio of the input stream.
-
-  var width = 200;    // We will scale the photo width to this
-  var height = 0;     // This will be computed based on the input stream
-
-  // |streaming| indicates whether or not we're currently streaming
-  // video from the camera. Obviously, we start at false.
-
-  var streaming = false;
-
-  // The various HTML elements we need to configure or control. These
-  // will be set by the startup() function.
-
-  var video = null;
-  var canvas = null;
-  var photo = null;
-  var startbutton = null;
-
-  function startup() {
-    video = document.getElementById('video');
-    canvas = document.getElementById('canvas');
-    photo = document.getElementById('photo');
-    startbutton = document.getElementById('startbutton');
-
-    navigator.getMedia = ( navigator.getUserMedia ||
-                           navigator.webkitGetUserMedia ||
-                           navigator.mozGetUserMedia ||
-                           navigator.msGetUserMedia);
-
-    navigator.getMedia(
-      {
-        video: true,
-        audio: false
-      },
-      function(stream) {
-        if (navigator.mozGetUserMedia) {
-          video.mozSrcObject = stream;
-        } else {
-          var vendorURL = window.URL || window.webkitURL;
-          video.src = vendorURL.createObjectURL(stream);
-        }
-        video.play();
-      },
-      function(err) {
-        console.log("An error occured! " + err);
-      }
-    );
-
-    video.addEventListener('canplay', function(ev){
-      if (!streaming) {
-        height = video.videoHeight / (video.videoWidth/width);
-      
-        // Firefox currently has a bug where the height can't be read from
-        // the video, so we will make assumptions if this happens.
-      
-        if (isNaN(height)) {
-          height = width / (3/3);
-        }
-      
-        video.setAttribute('width', width);
-        video.setAttribute('height', height);
-        canvas.setAttribute('width', width);
-        canvas.setAttribute('height', height);
-        streaming = true;
-      }
-    }, false);
-
-    startbutton.addEventListener('click', function(ev){
-      takepicture();
-      ev.preventDefault();
-    }, false);
-    
-    clearphoto();
-  }
-
-  // Fill the photo with an indication that none has been
-  // captured.
-
-  function clearphoto() {
-    var context = canvas.getContext('2d');
-    context.fillStyle = "#AAA";
-    context.fillRect(0, 0, canvas.width, canvas.height);
-
-    var data = canvas.toDataURL('image/png');
-    photo.setAttribute('src', data);
-  }
-  
-  // Capture a photo by fetching the current contents of the video
-  // and drawing it into a canvas, then converting that to a PNG
-  // format data URL. By drawing it on an offscreen canvas and then
-  // drawing that to the screen, we can change its size and/or apply
-  // other changes before drawing it.
-
-  function takepicture() {
-    var context = canvas.getContext('2d');
-    if (width && height) {
-      canvas.width = width;
-      canvas.height = height;
-      context.drawImage(video, 0, 0, width, height);
-    
-      var data = canvas.toDataURL('image/png');
-
-      photo.setAttribute('src', data);
-
-      //to do: send photo to firebase console
-
-    } else {
-      clearphoto();
-    }
-  }
-  startup();
-
-  </script>
+</div>
+</div>
+<div class="gradient"></div>
+</div>
