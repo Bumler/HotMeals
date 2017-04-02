@@ -111,8 +111,11 @@ warmMeal.controller('signUpController', function($scope){
 });
 
 warmMeal.controller('loginController', function($scope){
+	$scope.email = "";
+	$scope.password = "";
 
-}
+
+});
 
 warmMeal.controller('mapController', function($scope){
 	// Taking care of search bar 
@@ -240,4 +243,4 @@ function addPopupEvListClose(map, marker, newInfoWindow){
 		newInfoWindow.close(map, marker);
 	};
 }
-})
+});
