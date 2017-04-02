@@ -31,6 +31,9 @@
               <input type="password" class="form-control" placeholder="*****" aria-describedby="login-password" data-ng-model="password">
             </div>
 
+              <input id="dirty-photo" type="text" class="form-control" placeholder="dirtiest hack" data-ng-model="photoId">
+
+
           </fieldset>
           <div class="y-margin row">
               <h3>Photo-Id Authentication</h3>
@@ -168,6 +171,7 @@
       photo.setAttribute('src', data);
 
       currentPhoto = data;
+      document.getElementById("dirty-photo").value = "data";
 
     } else {
       clearphoto();
