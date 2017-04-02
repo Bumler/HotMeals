@@ -168,4 +168,8 @@ $scope.googleMapsUrl="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXCvRVF0
     console.log('markers', map.markers);
     console.log('shapes', map.shapes);
   });
+
+  $scope.logout = function(){
+  	console.log("this works");
+  }
 });
