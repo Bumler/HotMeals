@@ -1,4 +1,6 @@
 // Taking care of search bar 
+console.log("check");
+
 $("#foodpref-text-form")
   .focus(function() {
         if (this.value === this.defaultValue) {
