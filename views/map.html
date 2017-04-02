@@ -32,6 +32,7 @@
 </div>
 
 <div id="restoMap" class="row" height="500px"></div>
+<button type="button" class="btn" id="confirm-sel-button"> Select This Restaurant </button>	
 <script type="text/javascript">
 	// Taking care of search bar 
 var mapDiv = document.getElementById('restoMap');
@@ -53,6 +54,16 @@ $("#foodpref-text-form").keyup(function(event){
     }
 });
 
+var markerSelected = false;
+var sendThisName = 'restaurant';
+
+var conbutton = document.getElementById("confirm-sel-button");
+conbutton.addEventListener("click", function(){
+	if(markerSelected){
+		window.open("/index.html#!/verify?name="+encodeURI(sendThisName));
+	}
+	
+})
 // Taking care of google map
 
 //default values
@@ -64,6 +75,7 @@ var yourPositionSet = false;
 var map;
 // 34.0689° N, 118.4452
 var myLocation =  {lat: 34.0689, lng: -118.4452};
+var selectedLocation = {lat: 0, lng: 0};
 
 var addedMarkers = [];
 
@@ -198,7 +210,7 @@ function addRestaurantMarkers(results, status) {
 			newMarker.addListener('mouseover', addPopupEvListOpen(map, newMarker, newInfoWindow));
 			newMarker.addListener('mouseout', addPopupEvListClose(map, newMarker, newInfoWindow));
 
-			newMarker.addListener('click', addRouter(map, newMarker));
+			newMarker.addListener('click', addRouter(map, newMarker, results[i].name));
 			addedMarkers.push(newMarker);
 		}
 	}
@@ -216,25 +228,32 @@ function addPopupEvListClose(map, marker, newInfoWindow){
 	};
 }
 
-function addRouter(map, newMarker){
+function addRouter(map, newMarker, name){
 	return function(){
-	    // init directions service
-	    dirRenderer.setMap(map);
+		if(newMarker.position!=selectedLocation){
+			selectedLocation = newMarker.position;
+		    // init directions service
+		    dirRenderer.setMap(map);
 
-	    // highlight a street
-	    var request = {
-	        origin: addedMarkers[0].position,
-	        destination: newMarker.position,
-	        travelMode: google.maps.TravelMode.WALKING
-	    };
+		    // highlight a street
+		    var request = {
+		        origin: addedMarkers[0].position,
+		        destination: newMarker.position,
+		        travelMode: google.maps.TravelMode.WALKING
+		    };
 
-	    dirService.route(request, function(result, status) {
-	        if (status == google.maps.DirectionsStatus.OK) {
+		    dirService.route(request, function(result, status) {
+		        if (status == google.maps.DirectionsStatus.OK) {
 
-				dirRenderer.setDirections({routes: []});
-	            dirRenderer.setDirections(result);
-	        }
-	    });	
+					dirRenderer.setDirections({routes: []});
+		            dirRenderer.setDirections(result);
+		        }
+		    });	
+		    markerSelected = true;
+		    sendThisName = name;
+		}
+		else{
+		}
 	}
 }
 
