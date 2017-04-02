@@ -1,28 +1,25 @@
 <div id="foodpref" class="container-fluid col-lg-12">
-	<div class="form-group row foodpref-search-row">
-		<span class="col-md-2 col-form-label foodpref-label"> Food Preferences</span>
-		<span class="col-md-6">
-			<input class="form-control foodpref-form" type="search" id="foodpref-text-form" placeholder="Vegetarian, Mexican, etc..">	
-		</span>
-		<button type="button" class="btn" id="foodpref-button"> Filter </button>
-	</div>
-	<div class="form-group row foodpref-choices-row">
-		<span class="col-md-2"></span>
-		<span class="col-md-10">
-			<ul class="foodpref-choicelist">
-				<li>Vegetarian</li>
-				<li>Vegan</li>
-				<li>Gluten-Free</li>
-				<li>Halal</li>
-				<li>Kosher</li>
-				<li>Sea Food</li>
-				<li>Burgers</li>
-			</ul>
-		</span>
-	</div>
-</div>
+  		<div class="form-group row foodpref-search-row">
+			<span class="col-md-2 col-form-label foodpref-label"> Food Preferences</span>
+			<span class="col-md-6">
+				<input class="form-control foodpref-form" type="search" id="foodpref-text-form" placeholder="Vegetarian, Mexican, etc..">	
+			</span>
+			<button type="button" class="btn" id="foodpref-button"> Filter </button>
+		</div>
+  		<div class="form-group row foodpref-choices-row">
+  			<span class="col-md-2"></span>
+			<span class="col-md-10">
+				<ul class="foodpref-choicelist">
+					<li>Vegetarian</li>
+					<li>Vegan</li>
+					<li>Gluten-Free</li>
+					<li>Halal</li>
+					<li>Kosher</li>
+					<li>Sea Food</li>
+					<li>Burgers</li>
+				</ul>
+			</span>
+		</div>
+  	</div>
 
-<div map-lazy-load="https://maps.google.com/maps/api/js"
-map-lazy-load-params="{{googleMapsUrl}}">
-<ng-map center="41,-87" zoom="3" style="height: 100vh"></ng-map>
-</div>
+    <div id="restoMap"></div>
