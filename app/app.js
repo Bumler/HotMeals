@@ -18,6 +18,10 @@ warmMeal.config(['$routeProvider', function($routeProvider){
 		templateUrl: 'views/nextMealAvailability.html',
 		controller: 'availableController'
 	})
+	.when('/noavailablemeal',{
+		templateUrl: 'views/login.html',
+		controller: 'loginController'
+	})
 	.otherwise({
 		redirectTo: '/'
 	});
@@ -74,11 +78,11 @@ warmMeal.controller('signUpController', function($scope){
 
 		var test = firebase.database().ref('users/' + userId);
 		test.set({
-		    firstName: $scope.name,
-		    lastName: $scope.lastName,
-		    email: $scope.email,
-		    isBanned: false,
-		    lastClaimedCode: initialDate
+			firstName: $scope.name,
+			lastName: $scope.lastName,
+			email: $scope.email,
+			isBanned: false,
+			lastClaimedCode: initialDate
 		    // TODO: Send in photo url obtained from the camera once we integrate it with the signup process.
 		    // photoID: imageUrl
 		});
@@ -87,15 +91,15 @@ warmMeal.controller('signUpController', function($scope){
 		var user = firebase.auth().createUserWithEmailAndPassword($scope.email, $scope.password).catch(function(error) {
 				// Handle Errors here.
 				var errorCode = error.code;
-			 	var errorMessage = error.message;
-			 	console.log("error creating user: " + errorMessage);
-			  
+				var errorMessage = error.message;
+				console.log("error creating user: " + errorMessage);
+
 				if (errorCode == 'auth/weak-password') {
-		        alert('The password is too weak.');
-		        } else {
-		          alert(errorMessage);
-		        }
-		});
+					alert('The password is too weak.');
+				} else {
+					alert(errorMessage);
+				}
+			});
 		console.log("returning user " + user);
 		return user;
 	}
