@@ -1,29 +1,30 @@
-	<div class="container-fluid font-color">
-		<div class="hero">
-			<div class="container-fluid absolute top-layer hero-text">
-
-				<div class="col-md-4">
-					<div class="row">
-						<h2>Username</h2>
-						<h2>Lorem ipsums dipsum flipsum dimsum</h2>
-					</div>
-
-					<div class="y-margin">
-						<div>stuff here</div>
-					</div>
-					<div class="y-margin">
-						<div>stuff here</div>
-					</div>					
-					<div class="y-margin">
-						<div>stuff here</div>
-					</div>				
-					<div class="y-margin">
-						<div>stuff here</div>
-					</div>
-					
-					
-					<div class="gradient"></div>
-				</div>					
-			</div>
+<div id="foodpref" class="container-fluid col-lg-12">
+  		<div class="form-group row foodpref-search-row">
+			<span class="col-md-2 col-form-label foodpref-label"> Food Preferences</span>
+			<span class="col-md-6">
+				<input class="form-control foodpref-form" type="search" id="foodpref-text-form" placeholder="Vegetarian, Mexican, etc..">	
+			</span>
+			<button type="button" class="btn" id="foodpref-button"> Filter </button>
 		</div>
-	</div>
+  		<div class="form-group row foodpref-choices-row">
+  			<span class="col-md-2"></span>
+			<span class="col-md-10">
+				<ul class="foodpref-choicelist">
+					<li>Vegetarian</li>
+					<li>Vegan</li>
+					<li>Gluten-Free</li>
+					<li>Halal</li>
+					<li>Kosher</li>
+					<li>Sea Food</li>
+					<li>Burgers</li>
+				</ul>
+			</span>
+		</div>
+  	</div>
+
+    <div id="restoMap"></div>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJC9iOp6rQeZiRGeXxIhE7zclIG8Diddk&callback=initMap&libraries=places"async defer></script>
+     <cript type="text/javascript" src="foodMaps/js/jquery-3.2.0.min.js"></script>
+    <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+    <script src="../foodMaps/js/map.js"></script>
