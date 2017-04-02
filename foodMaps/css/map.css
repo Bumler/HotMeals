@@ -1,0 +1,78 @@
+
+#restoMap {
+  position: fixed;
+  height: 100%;
+  z-index: 1;
+}
+/* Optional: Makes the sample page fill the window. */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.resto-info-window {
+}
+
+.resto-info-window .riw-row{
+}
+
+.resto-info-window .riw-row .riw-title{
+}
+
+.resto-info-window .riw-row .riw-data{
+}
+
+#foodpref {
+  position: fixed;
+  opacity: 0.85;
+  z-index: 2;
+}
+#foodpref .foodpref-search-row{
+  padding: 0.5em 0 0.5em 0; 
+  background-color: #e7b439;
+}
+#foodpref .foodpref-label {
+  font-family: Montserrat;
+  color: #9a2d19;
+  font-size: 1.25em;
+  left: 1em;
+}
+
+#foodpref-button {
+  background-color: #9a2d19;
+  font-family: Montserrat;
+  color: #eee4d7;
+}
+
+#foodpref-button:hover {
+  background-color: #c73915;
+}
+
+#foodpref .foodpref-choices-row{
+  margin-top: -20px;
+  opacity: 1;
+  background-color: #e7b439;
+}
+#foodpref .foodpref-choicelist {
+  margin-left: -2.0em ;
+}
+#foodpref .foodpref-choicelist li{
+  display: inline;
+}
+#foodpref .foodpref-choicelist li:before{
+  display: inline;
+  content:"• ";
+}
+
+
+
+
+
+
+
+
+
+
+
+
