@@ -146,10 +146,12 @@ warmMeal.controller('signUpController', function($scope, $location, WebcamServic
        
         //override function for be call when capture is finalized
         $scope.webcam.success = function(image, type) {
-            console.log("IMAGE = " + photo);
             $scope.photo = image;
             $scope.fotoContentType = type;
             $scope.showweb = false;
+            //trying to get photo data here see service at the top for other ideas
+            $scope.photoData = $scope.webcam.patData;
+            console.log(patData);
         };
 
         function turnOffWebCam() {
@@ -278,9 +280,32 @@ warmMeal.controller('signUpController', function($scope, $location, WebcamServic
 	};
 });
 
-warmMeal.controller('loginController', function($scope){
+warmMeal.controller('loginController', function($scope, $location, WebcamService){
 	$scope.email = "";
 	$scope.password = "";
+
+	$scope.takingPhoto = true;
+
+
+        $scope.vm = this;
+        
+        $scope.showweb = true;
+        $scope.webcam = WebcamService.webcam;
+       
+        //override function for be call when capture is finalized
+        $scope.webcam.success = function(image, type) {
+            $scope.photo = image;
+            $scope.fotoContentType = type;
+            $scope.showweb = false;
+                        //trying to get photo data here see service at the top for other ideas
+            $scope.photoData = $scope.webcam.patData;
+            console.log(patData);
+        };
+
+        function turnOffWebCam() {
+            if($scope.webcam && $scope.webcam.isTurnOn===true)
+                $scope.webcam.turnOff();
+        };
 
 	$scope.login = function(){
 		//TODO: Verify through facial recognition and then go to new page
@@ -296,6 +321,7 @@ warmMeal.controller('loginController', function($scope){
 		  alert(errorMessage);
 		});
 		console.log("user = " + user);
+		$location.path('/map');
 		return user;
 	}	
 
