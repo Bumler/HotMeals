@@ -83,30 +83,32 @@ warmMeal.controller('signUpController', function($scope){
 		    // photoID: imageUrl
 		});
 	}
+	function createAccount() {
+		var user = firebase.auth().createUserWithEmailAndPassword($scope.email, $scope.password).catch(function(error) {
+				// Handle Errors here.
+				var errorCode = error.code;
+			 	var errorMessage = error.message;
+			 	console.log("error creating user: " + errorMessage);
+			  
+				if (errorCode == 'auth/weak-password') {
+		        alert('The password is too weak.');
+		        } else {
+		          alert(errorMessage);
+		        }
+		});
+		console.log("returning user " + user);
+		return user;
+	}
 
 	$scope.submit = function(){
 		console.log("check");
-		if (hasValidEntries()) {
-			// Create a new user in Firebase
-			// var user = firebase.auth().createUserWithEmailAndPassword($scope.email, $scope.password).catch(function(error) {
-			// 	// Handle Errors here.
-			// 	var errorCode = error.code;
-			//  	var errorMessage = error.message;
-			//  	console.log("error creating user: " + errorMessage);
-			  
-			// 	if (errorCode == 'auth/weak-password') {
-		 //        alert('The password is too weak.');
-		 //        } else {
-		 //          alert(errorMessage);
-		 //        }
-			// });
+		// if (hasValidEntries()) {
+		// 	//Create a new user in Firebase
+		// 	var user = createAccount();
 
-			// writeUserData(user);
-			
-			
-
-			// TODO: Goto the homepage.
-		}
+		// 	writeUserData(user);		
+		// 	// TODO: Goto the homepage.
+		// }
 	};
 });
 
@@ -114,6 +116,21 @@ warmMeal.controller('loginController', function($scope){
 	$scope.email = "";
 	$scope.password = "";
 
+	$scope.login = function(){
+		//TODO: Verify through facial recognition and then go to new page
+		var user = firebaseSignIn();
+	};
+
+	function firebaseSignIn() {
+		var user = firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+		  // Handle Errors here.
+		  var errorMessage = error.message;
+		  console.log("error logging in user: " + errorMessage);
+		  alert(errorMessage);
+		});
+		return user;
+	}
+	
 
 });
 
