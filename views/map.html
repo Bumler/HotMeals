@@ -58,12 +58,17 @@ $("#foodpref-text-form").keyup(function(event){
 //default values
 var currentQuery = "restaurants";
 var currentSearchRadius = "1000";	
+var yourPositionSet = false;
 
 
 var map;
-var myLocation =  {lat: 34.069845, lng: -118.246329};
+// 34.0689° N, 118.4452
+var myLocation =  {lat: 34.0689, lng: -118.4452};
 
 var addedMarkers = [];
+
+var dirService; 
+var dirRenderer;
 
 function initMap() {
 	// Options for the google map that will be displayed
@@ -73,11 +78,28 @@ function initMap() {
 		zoom: 15,
 		mapTypeControl: false,
 		streetViewControl: false,
-		rotateControl: false	
+		rotateControl: false,
+
+
 	};		
 
 	// Create the base map that will be displayeds
 	map = new google.maps.Map(mapDiv, mapOptions);
+
+
+
+    dirService = new google.maps.DirectionsService();
+    dirRenderer = new google.maps.DirectionsRenderer({suppressMarkers: true});
+	var noPoi = [
+	{
+	    featureType: "poi",
+	    stylers: [
+	      { visibility: "off" }
+	    ]   
+	  }
+	];
+
+	map.setOptions({styles: noPoi});
 	findRestaurants();
 }
 
@@ -88,6 +110,37 @@ function findRestaurants(){
 		addedMarkers[i].setMap(null);
 	}	
 	addedMarkers = [];
+
+	// add You are HERE! star
+	if(!yourPositionSet){
+
+		var icon = {
+		    url: "img/star.png", // url
+		    scaledSize: new google.maps.Size(25, 25), // scaled size
+		    origin: new google.maps.Point(0,0), // origin
+		    anchor: new google.maps.Point(15,15) // anchor
+		};
+
+
+		// adds the marker to the map at a specified location
+		var newMarker = new google.maps.Marker({
+			position: map.getCenter(),
+			map: map, 
+			icon: icon
+		});		
+
+		// Creates the info window aka popup
+		var newInfoWindow = new google.maps.InfoWindow({
+			content: 
+			"<div class=&quot;resto-info-window&quot;>You are here! </div>"
+		});
+
+		// Adds the popup event listener
+		newMarker.addListener('mouseover', addPopupEvListOpen(map, newMarker, newInfoWindow));
+		newMarker.addListener('mouseout', addPopupEvListClose(map, newMarker, newInfoWindow));
+		addedMarkers.push(newMarker);
+	}
+
 
    	// Request JSON for for using the Google Places API
    	// the api will be used to retrieve restaurants within 1000m of the user's location
@@ -112,10 +165,19 @@ function addRestaurantMarkers(results, status) {
 		for (var i = 0; i < results.length; i++) {
 			var place = results[i];
 
+			var icon = {
+			    url: "img/soup-mark2.png", // url
+			    scaledSize: new google.maps.Size(30, 30), // scaled size
+			    origin: new google.maps.Point(0,0), // origin
+			    anchor: new google.maps.Point(15,15) // anchor
+			};
+
+
 			// adds the marker to the map at a specified location
 			var newMarker = new google.maps.Marker({
 				position: results[i].geometry.location,
-				map: map
+				map: map, 
+    			icon: icon
 			});		
 
 			// place holder variable for information about how many means a restaurant can provide
@@ -135,6 +197,8 @@ function addRestaurantMarkers(results, status) {
 			// Adds the popup event listener
 			newMarker.addListener('mouseover', addPopupEvListOpen(map, newMarker, newInfoWindow));
 			newMarker.addListener('mouseout', addPopupEvListClose(map, newMarker, newInfoWindow));
+
+			newMarker.addListener('click', addRouter(map, newMarker));
 			addedMarkers.push(newMarker);
 		}
 	}
@@ -152,6 +216,27 @@ function addPopupEvListClose(map, marker, newInfoWindow){
 	};
 }
 
+function addRouter(map, newMarker){
+	return function(){
+	    // init directions service
+	    dirRenderer.setMap(map);
+
+	    // highlight a street
+	    var request = {
+	        origin: addedMarkers[0].position,
+	        destination: newMarker.position,
+	        travelMode: google.maps.TravelMode.WALKING
+	    };
+
+	    dirService.route(request, function(result, status) {
+	        if (status == google.maps.DirectionsStatus.OK) {
+
+				dirRenderer.setDirections({routes: []});
+	            dirRenderer.setDirections(result);
+	        }
+	    });	
+	}
+}
 
 window.setTimeout(function(){$.getScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyAJC9iOp6rQeZiRGeXxIhE7zclIG8Diddk&callback=initMap&libraries=places', function()
 	{
