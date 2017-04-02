@@ -50,7 +50,7 @@
             on-error="webcam.onError(err)"
             on-stream="webcam.onStream(stream)"></webcam>
 
-            <button class="button" type="button" ng-click="webcam.makeSnapshot()">Capture</button>
+            <button class="button" type="button" ng-click="webcam.makeSnapshot()" style="width: 125px"><span class="glyphicon glyphicon-camera"></span></button>
             <canvas ng-hide="true" id="snapshot" width="200" height="200"></canvas>
           </div>
           
