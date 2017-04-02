@@ -8,6 +8,7 @@
 
   <link rel="stylesheet" type="text/css" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
   
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
   <!-- <link href='/s/shared.css'> -->
 </head>
 <body>
@@ -48,7 +49,7 @@
             </span>
           </div>
           <div class="row sy-margin">
-            <button type="button" class="button" ng-click="submit">Log In</button> 
+            <button type="button" class="button" ng-click="submit()">Log In</button> 
           </div>
         </div>  
       </div>
@@ -77,6 +78,8 @@
   var canvas = null;
   var photo = null;
   var startbutton = null;
+
+  var currentPhoto = null;
 
   function startup() {
     video = document.getElementById('video');
@@ -164,13 +167,72 @@
 
       photo.setAttribute('src', data);
 
-      //to do: send photo to firebase console
+      currentPhoto = data;
 
     } else {
       clearphoto();
     }
   }
   startup();
+
+
+
+  //Work for Microsoft's Face Recognition API
+  function facialRecognition() {
+      var faceIdFirebase = null;
+      var faceIdCurrentPicture = currentPhoto;
+        var params = {
+          // Request parameters
+
+          //dataType: "json",
+          //contentType: "application/json",
+          // "Ocp-Apim-Subscription-Key": “a528031d6c2e43478f9ae9cda40674b2”,
+        };
+      
+        $.ajax({
+            url: "https://westus.api.cognitive.microsoft.com/face/v1.0/verify?" + $.param(params),
+            beforeSend: function(xhrObj){
+                // Request headers
+                xhrObj.setRequestHeader("Content-Type","application/json");
+                xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key",“a528031d6c2e43478f9ae9cda40674b2”);
+            },
+            type: "POST",
+            // Request body
+            data: faceIdFirebase, faceIdCurrentPicture,
+        })
+        .done(function(data) {
+            alert("success");
+        })
+        .fail(function() {
+            alert("error");
+        });
+    }
+
+    function getBody(photoUrl) {
+      var params = {
+            // Request parameters
+            "returnFaceId": "true",
+            "returnFaceLandmarks": "false",
+        };
+      
+        $.ajax({
+            url: "https://westus.api.cognitive.microsoft.com/face/v1.0/detect?" + $.param(params),
+            beforeSend: function(xhrObj){
+                // Request headers
+                xhrObj.setRequestHeader("Content-Type","application/json");
+                xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key",“a528031d6c2e43478f9ae9cda40674b2”);
+            },
+            type: "POST",
+            // Request body
+            data: "photoUrl",
+        })
+        .done(function(data) {
+            alert("success");
+        })
+        .fail(function() {
+            alert("error");
+        });
+    }
 
   </script>
 </body>
