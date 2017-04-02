@@ -1,6 +1,12 @@
 .font-color {
   color: #eee4d7; }
 
+.left-text {
+  text-align: left; }
+
+p {
+  font-size: 18px; }
+
 .hero {
   height: 100vh;
   margin-left: -15px;
@@ -54,6 +60,11 @@
   transition-duration: 0.4s;
   cursor: pointer;
   font-size: 24px; }
+  .button a {
+    color: inherit;
+    /* blue colors for links too */
+    text-decoration: inherit;
+    /* no underline */ }
 
 .button {
   background-color: transparent;
@@ -64,6 +75,11 @@
 .button:hover {
   background-color: #eee4d7;
   color: #9a2d19; }
+  .button:hover a {
+    color: inherit;
+    /* blue colors for links too */
+    text-decoration: inherit;
+    /* no underline */ }
 
 .absolute {
   position: absolute; }
