@@ -1,85 +1,62 @@
 <html>
 <head>
-    <title>Login-Page</title>
-    <meta charset='utf-8'>
+  <title>Login-Page</title>
+  <meta charset='utf-8'>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-    <link rel="stylesheet" href="main.css" type="text/css" media="all">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="styles/main.css" type="text/css" media="all">
 
-    <!-- <link href='/s/shared.css'> --></head>
-    <body>
+  <link rel="stylesheet" type="text/css" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  
+  <!-- <link href='/s/shared.css'> -->
+</head>
+<body>
+<div class="container-fluid font-color">
+  <div class="hero">
+    <div class="container-fluid absolute hero-text top-layer signup-form">
 
+      <div class="row"> 
+        <div class="col-md-4"></div>
 
-
-<span class="col-md-4">
-</span>
-<span class="col-md-6">
-    
-
-    <div class="container">
-    <br>
-    <br>
-    </div>
-    <div class="container">
-    <div class="col-md-4">
-    <div class="input-group">
-  <span class="input-group-addon" id="basic-addon1">Email-Address</span>
-  <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1" data-ng-model="email">
-  </div>
-  </div>
-</div>
-
-<div class="container">
-   <br> 
-</div>
-
-<div class="container">
-    
-<div class="col-md-4">
-<div class="input-group">
-  <input type="text" class="form-control" placeholder="*****" aria-describedby="basic-addon2" data-ng-model="password">
-  <span class="input-group-addon" id="basic-addon2">Password</span>
-
-
-</div>
-</div>
-</div>
-
-
-<div class="container">
-   <br> 
-</div>
-
-
-
-<div class="container">
-   <div class="col-md-6">
-   <h4>Photo-Id Authentication</h4>
-</div>
-</div>
-            <div class="container">
-                <div class="col-md-6">
-
-                <div class="camera">
-                    <video id="video">Video stream not available.</video>
-                    <button id="startbutton">Take photo</button> 
-                </div>
-                <canvas id="canvas">
-                </canvas>
-                <div class="output">
-                    <img id="photo" alt="The screen capture will appear in this box."> 
-                </div>
+        <div class="col-md-4">
+          <h2>Login to Your Account</h2>
+          <fieldset class="row left-text input-group">
+            <div class="signup-row input-group row">
+              <span class="login-form input-group-addon" id="login-email">Email</span>
+              <input type="text" class="form-control" placeholder="Eg. james777@gmail.com" aria-describedby="login-email" data-ng-model="email">
             </div>
-        </div>
-        <br>
-        <span class="container col-md-6">
-       <button type="button" class="btn btn-primary" ng-click="login">LOGIN</button>
-        </span>
-        
+            <div class="signup-row input-group row">
+              <span class="login-form input-group-addon" id="login-password">Password</span>
+              <input type="password" class="form-control" placeholder="*****" aria-describedby="login-password" data-ng-model="password">
+            </div>
 
-</span>
-
-
-    <script src="capture.js">
-    </script>
+          </fieldset>
+          <div class="y-margin row">
+              <h3>Photo-Id Authentication</h3>
+          </div>
+          <div class="row photo-auth container">
+            <span class="camera col-md-2">
+                <video id="video">Video stream not available.</video>
+                <button id="startbutton">Take photo</button> 
+            </span>
+            <span> 
+            <canvas id="canvas col-md-2">
+            </canvas>
+            </span>
+            <span class="output col-md-2">
+                <img id="photo" alt="The screen capture will appear in this box."> 
+            </span>
+          </div>
+          <div class="row sy-margin">
+            <button type="button" class="button" ng-click="submit">Log In</button> 
+          </div>
+        </div>  
+      </div>
+      
+    </div>
+    <div class="gradient"></div>
+  </div>
+</div>
+<script src="app/capture.js">
+</script>
+</body>
