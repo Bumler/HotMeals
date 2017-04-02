@@ -21,7 +21,7 @@
           <div class="y-margin row">
             <h3>Photo-Id Authentication</h3>
           </div>
-          <div class="row">
+          <div class="row yy-margin">
             <div id="webcam" ng-if="vm.showweb">
               <webcam channel="vm.webcam.channel"
               on-streaming="vm.webcam.onSuccess()"
@@ -40,7 +40,7 @@
               <button class="button" type="button" ng-click="webcam.makeSnapshot()" style="width: 125px"><span class="glyphicon glyphicon-camera"></span></button>
               <canvas ng-hide="true" id="snapshot" width="200" height="200"></canvas>
             </div>
-            
+
             <img data-ng-src="{{'data:' + fotoContentType + ';base64,' + photo}}" style="max-height: 100px;" ng-if="photo"/>
 
           </div>
