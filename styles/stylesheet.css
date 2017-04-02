@@ -42,6 +42,29 @@
         .hero .hero-text h2 {
           font-size: 2rem; } }
 
+.button {
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  -webkit-transition-duration: 0.4s;
+  /* Safari */
+  transition-duration: 0.4s;
+  cursor: pointer;
+  font-size: 24px; }
+
+.button {
+  background-color: transparent;
+  color: #eee4d7;
+  border: 2px solid #eee4d7;
+  width: 250px; }
+
+.button:hover {
+  background-color: #eee4d7;
+  color: #9a2d19; }
+
 .absolute {
   position: absolute; }
 
