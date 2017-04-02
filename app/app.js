@@ -41,7 +41,7 @@ warmMeal.controller('availableController', function($scope){
 	$scope.date = "Tomorrow";
 });
 
-warmMeal.controller('signUpController', function($scope){
+warmMeal.controller('signUpController', function($scope, $location){
 	$scope.name = "";
 	$scope.lastName = "";
 	$scope.email = "";
@@ -120,7 +120,6 @@ warmMeal.controller('signUpController', function($scope){
 	}
 
 	$scope.submit = function(){
-		console.log("check");
 		if (hasValidEntries()) {
 			//Create a new user in Firebase
 			console.log("about to create account");
@@ -134,7 +133,7 @@ warmMeal.controller('signUpController', function($scope){
 				    writeUserData(user.uid);				    
 				}
 			});
-			// TODO: Goto the homepage.
+			$location.path('/map');
 		}
 	};
 });
