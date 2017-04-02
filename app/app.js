@@ -173,6 +173,13 @@ $scope.googleMapsUrl="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXCvRVF0
   });
 
   $scope.logout = function(){
-  	console.log("this works");
+  	firebase.auth().signOut().then(function() {
+	  // Sign-out successful.
+	  console.log("logout successful");
+	  //TODO: go to login page
+	}).catch(function(error) {
+	  // An error happened.
+	  console.log("logout failed");
+	});
   }
 });
