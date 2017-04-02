@@ -2,6 +2,16 @@
   color: #eee4d7;
 }
 
+.left-text{
+  text-align: left;
+}
+
+.login-form {
+  font-size: 18px;
+  background-color: #9a2d19;
+  color: #eee4d7;
+}
+
 .hero{
 
   .container-fluid{
@@ -39,13 +49,6 @@
   }
 
   .hero-text {
-    // position: absolute;
-    // z-index: 999;
-    color: #fff;
-
-    // top: 70%;
-    // left: 0;
-    // right: 0;
     text-align: center;
     // @media screen and (max-width: 768px) {
     //   top: 60%;
@@ -71,6 +74,39 @@
 }
 
 .button {
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  cursor: pointer;
+
+  font-size: 24px;
+
+  a{
+    color: inherit; /* blue colors for links too */
+    text-decoration: inherit; /* no underline */
+  }
+}
+
+.button {
+  background-color: transparent; 
+  color: #eee4d7; 
+  border: 2px solid #eee4d7;
+  width: 250px;
+}
+
+.button:hover {
+  background-color: #eee4d7;
+  color: #9a2d19;
+
+  a{
+    color: inherit; /* blue colors for links too */
+    text-decoration: inherit; /* no underline */
+  }
     padding: 16px 32px;
     text-align: center;
     text-decoration: none;
@@ -126,7 +162,7 @@
 }
 
 .btn-outline {
-    background-color: transparent;
-    color: #eee4d7;
-    transition: all .5s;
+  background-color: transparent;
+  color: #eee4d7;
+  transition: all .5s;
 }
