@@ -47,9 +47,11 @@ warmMeal.controller('signUpController', function($scope, $location){
 	$scope.email = "";
 	$scope.password = "";
 	$scope.confirmPassword = "";
-	$scope.photoId = null;
+	$scope.photoId = "";
 
 	function hasValidEntries(){
+		console.log("testing");
+		console.log($scope.photoId);
 		if(!$scope.name) {
 			alert('First Name cannot be blank.');
 			return false;
@@ -68,6 +70,8 @@ warmMeal.controller('signUpController', function($scope, $location){
 			return false;
 		} else if (!$scope.photoId){
 			//TODO return false once we make photoID not null 
+			alert('You must take a photo.');
+			return false;
 		} else if (!hasValidPassword()) {
 			return false;
 		}
@@ -123,6 +127,8 @@ warmMeal.controller('signUpController', function($scope, $location){
 	}
 
 	$scope.submit = function(){
+		console.log($scope.photoId);
+		console.log($scope.name);
 		if (hasValidEntries()) {
 			//Create a new user in Firebase
 			console.log("about to create account");

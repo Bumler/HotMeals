@@ -1,5 +1,4 @@
 
- <link rel="stylesheet" href="styles/main.css" type="text/css" media="all">
 <div class="container-fluid font-color">
 	<div class="hero">
 		<div class="container-fluid absolute hero-text top-layer signup-form more-space">
@@ -30,32 +29,35 @@
 							<span class="login-form input-group-addon" id="signup-confirm-password">Confirm-Password</span>
 							<input type="password" class="form-control" placeholder="*****" aria-describedby="signup-confirm-password"  data-ng-model="confirmPassword">
 						</div>
+            <h2>{{name}}</h2>
+            <h2>{{photoId}}</h2>
+            <input type="text" class="form-control" id="dirty-photo" placeholder="" aria-describedby="signup-first-name" data-ng-model="photoId" style="position: absolute; left: -5000px">
 
-					</fieldset>
-					<div class="y-margin row">
-		              <h3>Photo-Id Authentication</h3>
-		          </div>
-		          <div class="row photo-auth container">
-		            <span class="camera col-md-2">
-		                <video id="video">Video stream not available.</video>
-		                <button id="startbutton">Take photo</button> 
-		            </span>
-		            <span> 
-		            <canvas id="canvas">
-		            </canvas>
-		            </span>
-		            <span class="output col-md-2">
-		                <img id="photo" alt="The screen capture will appear in this box."> 
-		            </span>
-		          </div>
-		          <div class="row sy-margin">
-		            <button type="button" class="button" ng-click="submit">Create Account</button> 
-		          </div>
-				</div>	
-			</div>
-		</div>
-		<div class="gradient"></div>
-	</div>
+          </fieldset>
+          <div class="y-margin row">
+            <h3>Photo-Id Authentication</h3>
+          </div>
+          <div class="row photo-auth container">
+            <span class="camera col-md-2">
+              <video id="video">Video stream not available.</video>
+              <button id="startbutton">Take photo</button> 
+            </span>
+            <span> 
+              <canvas id="canvas">
+              </canvas>
+            </span>
+            <span class="output col-md-2">
+              <img id="photo" alt="The screen capture will appear in this box."> 
+            </span>
+          </div>
+          <div class="row sy-margin">
+            <button type="button" class="button" ng-click="submit()">Create Account</button> 
+          </div>
+        </div>	
+      </div>
+    </div>
+    <div class="gradient"></div>
+  </div>
 </div>
 
 <script type="text/javascript">
@@ -86,40 +88,40 @@
     startbutton = document.getElementById('startbutton');
 
     navigator.getMedia = ( navigator.getUserMedia ||
-                           navigator.webkitGetUserMedia ||
-                           navigator.mozGetUserMedia ||
-                           navigator.msGetUserMedia);
+     navigator.webkitGetUserMedia ||
+     navigator.mozGetUserMedia ||
+     navigator.msGetUserMedia);
 
     navigator.getMedia(
-      {
-        video: true,
-        audio: false
-      },
-      function(stream) {
-        if (navigator.mozGetUserMedia) {
-          video.mozSrcObject = stream;
-        } else {
-          var vendorURL = window.URL || window.webkitURL;
-          video.src = vendorURL.createObjectURL(stream);
-        }
-        video.play();
-      },
-      function(err) {
-        console.log("An error occured! " + err);
+    {
+      video: true,
+      audio: false
+    },
+    function(stream) {
+      if (navigator.mozGetUserMedia) {
+        video.mozSrcObject = stream;
+      } else {
+        var vendorURL = window.URL || window.webkitURL;
+        video.src = vendorURL.createObjectURL(stream);
       }
+      video.play();
+    },
+    function(err) {
+      console.log("An error occured! " + err);
+    }
     );
 
     video.addEventListener('canplay', function(ev){
       if (!streaming) {
         height = video.videoHeight / (video.videoWidth/width);
-      
+
         // Firefox currently has a bug where the height can't be read from
         // the video, so we will make assumptions if this happens.
-      
+
         if (isNaN(height)) {
           height = width / (3/3);
         }
-      
+
         video.setAttribute('width', width);
         video.setAttribute('height', height);
         canvas.setAttribute('width', width);
@@ -160,12 +162,16 @@
       canvas.width = width;
       canvas.height = height;
       context.drawImage(video, 0, 0, width, height);
-    
+
       var data = canvas.toDataURL('image/png');
 
       photo.setAttribute('src', data);
 
-      //to do: send photo to firebase console
+      var data = canvas.toDataURL('image/png');
+      photo.setAttribute('src', data);
+
+      currentPhoto = data;
+      document.getElementById('dirty-photo').value = data;
 
     } else {
       clearphoto();
@@ -173,4 +179,4 @@
   }
   startup();
 
-  </script>
+</script>
