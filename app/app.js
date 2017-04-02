@@ -9,6 +9,9 @@ warmMeal.config(['$routeProvider', function($routeProvider){
 		.when('/map',{
 			templateUrl: 'views/map.html'
 		})
+		.when('/signup',{
+			templateUrl: 'views/signup.html'
+		})
 		.otherwise({
 			redirectTo: '/'
 		});
