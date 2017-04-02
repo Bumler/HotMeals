@@ -1,17 +1,3 @@
-<html>
-<head>
-  <title>Login-Page</title>
-  <meta charset='utf-8'>
-
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="styles/main.css" type="text/css" media="all">
-
-  <link rel="stylesheet" type="text/css" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-  
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-  <!-- <link href='/s/shared.css'> -->
-</head>
-<body>
 <div class="container-fluid font-color">
   <div class="hero">
     <div class="container-fluid absolute hero-text top-layer signup-form">
@@ -33,22 +19,33 @@
 
           </fieldset>
           <div class="y-margin row">
-              <h3>Photo-Id Authentication</h3>
+            <h3>Photo-Id Authentication</h3>
           </div>
-          <div class="row photo-auth container">
-            <span class="camera col-md-2">
-                <video id="video">Video stream not available.</video>
-                <button id="startbutton">Take photo</button> 
-            </span>
-            <span> 
-            <canvas id="canvas">
-            </canvas>
-            </span>
-            <span class="output col-md-2">
-                <img id="photo" alt="The screen capture will appear in this box."> 
-            </span>
+          <div class="row">
+            <div id="webcam" ng-if="vm.showweb">
+              <webcam channel="vm.webcam.channel"
+              on-streaming="vm.webcam.onSuccess()"
+              on-error="vm.webcam.onError(err)"
+              on-stream="vm.webcam.onStream(stream)"></webcam>
+              <button class="btn btn-default" type="button" ng-click="vm.webcam.makeSnapshot()">Capture</button>
+              <canvas ng-hide="true" id="snapshot" width="200" height="200"></canvas>
+            </div>
+            <img data-ng-src="{{'data:' + vm.fotoContentType + ';base64,' + vm.photo}}" style="max-height: 100px;" ng-if="vm.photo"/>
+            <div id="webcam" ng-if="showweb">
+              <webcam channel="webcam.channel"
+              on-streaming="webcam.onSuccess()"
+              on-error="webcam.onError(err)"
+              on-stream="webcam.onStream(stream)"></webcam>
+
+              <button class="button" type="button" ng-click="webcam.makeSnapshot()" style="width: 125px"><span class="glyphicon glyphicon-camera"></span></button>
+              <canvas ng-hide="true" id="snapshot" width="200" height="200"></canvas>
+            </div>
+            
+            <img data-ng-src="{{'data:' + fotoContentType + ';base64,' + photo}}" style="max-height: 100px;" ng-if="photo"/>
+
           </div>
-          <div class="row sy-margin">
+
+          <div class="row">
             <button type="button" class="button" ng-click="submit()">Log In</button> 
           </div>
         </div>  
@@ -58,181 +55,3 @@
     <div class="gradient"></div>
   </div>
 </div>
-  <script type="text/javascript">
-  // The width and height of the captured photo. We will set the
-  // width to the value defined here, but the height will be
-  // calculated based on the aspect ratio of the input stream.
-
-  var width = 200;    // We will scale the photo width to this
-  var height = 0;     // This will be computed based on the input stream
-
-  // |streaming| indicates whether or not we're currently streaming
-  // video from the camera. Obviously, we start at false.
-
-  var streaming = false;
-
-  // The various HTML elements we need to configure or control. These
-  // will be set by the startup() function.
-
-  var video = null;
-  var canvas = null;
-  var photo = null;
-  var startbutton = null;
-
-  var currentPhoto = null;
-
-  function startup() {
-    video = document.getElementById('video');
-    canvas = document.getElementById('canvas');
-    photo = document.getElementById('photo');
-    startbutton = document.getElementById('startbutton');
-
-    navigator.getMedia = ( navigator.getUserMedia ||
-                           navigator.webkitGetUserMedia ||
-                           navigator.mozGetUserMedia ||
-                           navigator.msGetUserMedia);
-
-    navigator.getMedia(
-      {
-        video: true,
-        audio: false
-      },
-      function(stream) {
-        if (navigator.mozGetUserMedia) {
-          video.mozSrcObject = stream;
-        } else {
-          var vendorURL = window.URL || window.webkitURL;
-          video.src = vendorURL.createObjectURL(stream);
-        }
-        video.play();
-      },
-      function(err) {
-        console.log("An error occured! " + err);
-      }
-    );
-
-    video.addEventListener('canplay', function(ev){
-      if (!streaming) {
-        height = video.videoHeight / (video.videoWidth/width);
-      
-        // Firefox currently has a bug where the height can't be read from
-        // the video, so we will make assumptions if this happens.
-      
-        if (isNaN(height)) {
-          height = width / (3/3);
-        }
-      
-        video.setAttribute('width', width);
-        video.setAttribute('height', height);
-        canvas.setAttribute('width', width);
-        canvas.setAttribute('height', height);
-        streaming = true;
-      }
-    }, false);
-
-    startbutton.addEventListener('click', function(ev){
-      takepicture();
-      ev.preventDefault();
-    }, false);
-    
-    clearphoto();
-  }
-
-  // Fill the photo with an indication that none has been
-  // captured.
-
-  function clearphoto() {
-    var context = canvas.getContext('2d');
-    context.fillStyle = "#AAA";
-    context.fillRect(0, 0, canvas.width, canvas.height);
-
-    var data = canvas.toDataURL('image/png');
-    photo.setAttribute('src', data);
-  }
-  
-  // Capture a photo by fetching the current contents of the video
-  // and drawing it into a canvas, then converting that to a PNG
-  // format data URL. By drawing it on an offscreen canvas and then
-  // drawing that to the screen, we can change its size and/or apply
-  // other changes before drawing it.
-
-  function takepicture() {
-    var context = canvas.getContext('2d');
-    if (width && height) {
-      canvas.width = width;
-      canvas.height = height;
-      context.drawImage(video, 0, 0, width, height);
-    
-      var data = canvas.toDataURL('image/png');
-
-      photo.setAttribute('src', data);
-
-      currentPhoto = data;
-
-    } else {
-      clearphoto();
-    }
-  }
-  startup();
-
-
-
-  //Work for Microsoft's Face Recognition API
-  function facialRecognition() {
-      var faceIdFirebase = null;
-      var faceIdCurrentPicture = currentPhoto;
-        var params = {
-          // Request parameters
-
-          //dataType: "json",
-          //contentType: "application/json",
-          // "Ocp-Apim-Subscription-Key": “a528031d6c2e43478f9ae9cda40674b2”,
-        };
-      
-        $.ajax({
-            url: "https://westus.api.cognitive.microsoft.com/face/v1.0/verify?" + $.param(params),
-            beforeSend: function(xhrObj){
-                // Request headers
-                xhrObj.setRequestHeader("Content-Type","application/json");
-                xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key",“a528031d6c2e43478f9ae9cda40674b2”);
-            },
-            type: "POST",
-            // Request body
-            data: faceIdFirebase, faceIdCurrentPicture,
-        })
-        .done(function(data) {
-            alert("success");
-        })
-        .fail(function() {
-            alert("error");
-        });
-    }
-
-    function getBody(photoUrl) {
-      var params = {
-            // Request parameters
-            "returnFaceId": "true",
-            "returnFaceLandmarks": "false",
-        };
-      
-        $.ajax({
-            url: "https://westus.api.cognitive.microsoft.com/face/v1.0/detect?" + $.param(params),
-            beforeSend: function(xhrObj){
-                // Request headers
-                xhrObj.setRequestHeader("Content-Type","application/json");
-                xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key",“a528031d6c2e43478f9ae9cda40674b2”);
-            },
-            type: "POST",
-            // Request body
-            data: "photoUrl",
-        })
-        .done(function(data) {
-            alert("success");
-        })
-        .fail(function() {
-            alert("error");
-        });
-    }
-
-  </script>
-</body>
