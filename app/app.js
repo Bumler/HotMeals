@@ -146,6 +146,7 @@ warmMeal.controller('signUpController', function($scope, $location, WebcamServic
        
         //override function for be call when capture is finalized
         $scope.webcam.success = function(image, type) {
+            console.log("IMAGE = " + photo);
             $scope.photo = image;
             $scope.fotoContentType = type;
             $scope.showweb = false;
@@ -175,7 +176,8 @@ warmMeal.controller('signUpController', function($scope, $location, WebcamServic
 			alert('Password cannot be blank.');
 			return false;
 		} else if (!$scope.photoId){
-			//TODO return false once we make photoID not null 
+			alert('No photo was taken.');
+			return false;
 		} else if (!hasValidPassword()) {
 			return false;
 		}
@@ -298,7 +300,7 @@ warmMeal.controller('loginController', function($scope){
 	}	
 
 	//Work for Microsoft's Face Recognition API
-  function facialRecognition() {
+  	function facialRecognition() {
       var faceIdFirebase = null;
       var faceIdCurrentPicture = currentPhoto;
         var params = {
@@ -314,7 +316,7 @@ warmMeal.controller('loginController', function($scope){
             beforeSend: function(xhrObj){
                 // Request headers
                 xhrObj.setRequestHeader("Content-Type","application/json");
-                xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key",“a528031d6c2e43478f9ae9cda40674b2”);
+                // xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key",“a528031d6c2e43478f9ae9cda40674b2”);
             },
             type: "POST",
             // Request body
@@ -340,7 +342,7 @@ warmMeal.controller('loginController', function($scope){
             beforeSend: function(xhrObj){
                 // Request headers
                 xhrObj.setRequestHeader("Content-Type","application/json");
-                xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key",“a528031d6c2e43478f9ae9cda40674b2”);
+                // xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key",“a528031d6c2e43478f9ae9cda40674b2”);
             },
             type: "POST",
             // Request body
