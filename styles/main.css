@@ -1,15 +1,15 @@
 #video {
   border: 1px solid black;
   box-shadow: 2px 2px 3px black;
-  width:320px;
-  height:240px;
+  width:200px;
+  height:200px;
 }
 
 #photo {
   border: 1px solid black;
   box-shadow: 2px 2px 3px black;
-  width:320px;
-  height:240px;
+  width:200px;
+  height:200px;
 }
 
 #canvas {
@@ -17,20 +17,24 @@
 }
 
 .camera {
-  width: 340px;
+  width:200px;
+  height:200px;
+  right:20px;
   display:inline-block;
 }
 
 .output {
-  width: 340px;
+  left:20px;
+  width:200px;
+  height:200px; 
   display:inline-block;
 }
 
 #startbutton {
   display:block;
   position:relative;
-  margin-left:auto;
-  margin-right:auto;
+  margin-left: 50px;
+  width:100px;
   bottom:32px;
   background-color: rgba(0, 150, 0, 0.5);
   border: 1px solid rgba(255, 255, 255, 0.7);
