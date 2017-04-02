@@ -1,4 +1,4 @@
-var warmMeal = angular.module('warmMeal', ['ngRoute']);
+var warmMeal = angular.module('warmMeal', ['ngRoute', 'ngMap']);
 
 
 warmMeal.config(['$routeProvider', function($routeProvider){
@@ -41,12 +41,13 @@ warmMeal.controller('availableController', function($scope){
 	$scope.date = "Tomorrow";
 });
 
-warmMeal.controller('signUpController', function($scope){
+warmMeal.controller('signUpController', function($scope, $location){
 	$scope.name = "";
 	$scope.lastName = "";
 	$scope.email = "";
 	$scope.password = "";
 	$scope.confirmPassword = "";
+	$scope.photoId = null;
 
 	function hasValidEntries(){
 		if(!$scope.name) {
@@ -65,6 +66,8 @@ warmMeal.controller('signUpController', function($scope){
 		} else if(!$scope.confirmPassword) {
 			alert('Password cannot be blank.');
 			return false;
+		} else if (!$scope.photoId){
+			//TODO return false once we make photoID not null 
 		} else if (!hasValidPassword()) {
 			return false;
 		}
@@ -98,7 +101,7 @@ warmMeal.controller('signUpController', function($scope){
 			isBanned: false,
 			lastClaimedCode: initialDate
 		    // TODO: Send in photo url obtained from the camera once we integrate it with the signup process.
-		    // photoID: imageUrl
+		    // photoId: $scope.photoId
 		});
 	}
 	function createAccount() {
@@ -120,7 +123,6 @@ warmMeal.controller('signUpController', function($scope){
 	}
 
 	$scope.submit = function(){
-		console.log("check");
 		if (hasValidEntries()) {
 			//Create a new user in Firebase
 			console.log("about to create account");
@@ -134,7 +136,7 @@ warmMeal.controller('signUpController', function($scope){
 				    writeUserData(user.uid);				    
 				}
 			});
-			// TODO: Goto the homepage.
+			$location.path('/map');
 		}
 	};
 });
@@ -161,6 +163,16 @@ warmMeal.controller('loginController', function($scope){
 	}	
 });
 
-warmMeal.controller('mapController', function($scope){
+warmMeal.controller('mapController', function($scope, NgMap){
 
+  $scope.logout = function(){
+  	firebase.auth().signOut().then(function() {
+	  // Sign-out successful.
+	  console.log("logout successful");
+	  //TODO: go to login page
+	}).catch(function(error) {
+	  // An error happened.
+	  console.log("logout failed");
+	});
+  }
 });

@@ -1,3 +1,12 @@
+
+<!DOCTYPE html>
+<html ng-app="warmMeal">
+<!-- <html lang="en" ng-app> -->
+<head>
+</head>
+<body>
+
+<link href="styles/map.css" rel="stylesheet" type="text/css" />
 <div id="foodpref" class="container-fluid col-lg-12">
 	<div class="form-group row foodpref-search-row">
 		<span class="col-md-2 col-form-label foodpref-label"> Food Preferences</span>
@@ -22,7 +31,134 @@
 	</div>
 </div>
 
-<div map-lazy-load="https://maps.google.com/maps/api/js"
-map-lazy-load-params="{{googleMapsUrl}}">
-<ng-map center="41,-87" zoom="3" style="height: 100vh"></ng-map>
+<div id="restoMap" class="row" height="500px"></div>
+<script type="text/javascript">
+	// Taking care of search bar 
+var mapDiv = document.getElementById('restoMap');
+
+var fpbutton = document.getElementById("foodpref-button");
+fpbutton.addEventListener("click", function(){
+	currentQuery = document.getElementById("foodpref-text-form").value + " restaurants";
+	myLocation = map.getCenter();	
+	findRestaurants();
+})
+
+
+$("#foodpref-text-form").keyup(function(event){
+    if(event.keyCode == 13){
+       	fpbutton.style.background = "#e19c18"
+        $("#foodpref-button").click();
+		setTimeout(function() {
+       	fpbutton.style.background = "#9a2d19"}, 100);
+    }
+});
+
+// Taking care of google map
+
+//default values
+var currentQuery = "restaurants";
+var currentSearchRadius = "1000";	
+
+
+var map;
+var myLocation =  {lat: 34.069845, lng: -118.246329};
+
+var addedMarkers = [];
+
+function initMap() {
+	// Options for the google map that will be displayed
+	// Center should correspond to the users' current location
+	var mapOptions = {
+		center: myLocation,
+		zoom: 15,
+		mapTypeControl: false,
+		streetViewControl: false,
+		rotateControl: false	
+	};		
+
+	// Create the base map that will be displayeds
+	map = new google.maps.Map(mapDiv, mapOptions);
+	findRestaurants();
+}
+
+function findRestaurants(){
+
+
+	for(var i=0;i<addedMarkers.length;i++){
+		addedMarkers[i].setMap(null);
+	}	
+	addedMarkers = [];
+
+   	// Request JSON for for using the Google Places API
+   	// the api will be used to retrieve restaurants within 1000m of the user's location
+    var request = {
+		location: map.getCenter(),
+		radius: currentSearchRadius,
+		query: currentQuery
+	};
+
+	// Send the request and call the addRestaurantMarkers
+	// to include the restaurants on the map being shows
+	var googPlaceService = new google.maps.places.PlacesService(map);
+	googPlaceService.textSearch(request, addRestaurantMarkers);
+}
+
+	
+function addRestaurantMarkers(results, status) {
+	// If request was successful
+	if (status == google.maps.places.PlacesServiceStatus.OK) {
+
+		// Iterate through ALL restaurants, add their markers, and add the popup info for each marker
+		for (var i = 0; i < results.length; i++) {
+			var place = results[i];
+
+			// adds the marker to the map at a specified location
+			var newMarker = new google.maps.Marker({
+				position: results[i].geometry.location,
+				map: map
+			});		
+
+			// place holder variable for information about how many means a restaurant can provide
+			var mealCountInfo = Math.floor(Math.random()*10);
+
+			// place holder variable for type of food that a restaurant will provid
+			// var foodType = "Vegan, Vegetarian, Gluten-Free, Organic";
+			// <div class=&quot;riw-row&quot;><span class=&quot;riw-title&quot;> Food: </span>  	<span class=&quot;riw-data&quot;>" + foodType + "</span> </div> 
+
+			// Creates the info window aka popup
+			var newInfoWindow = new google.maps.InfoWindow({
+				content: 
+				"<div class=&quot;resto-info-window&quot;><div class=&quot;riw-row&quot;><span class=&quot;riw-title&quot;> " +  results[i].name + "  </span>	<span class=&quot;riw-data&quot;></span></div><div class=&quot;riw-row&quot;> <span class=&quot;riw-title&quot;> Meal Count: </span><span class=&quot;riw-data&quot;> " + mealCountInfo + " </span>  </div> </div>"
+			});
+
+
+			// Adds the popup event listener
+			newMarker.addListener('mouseover', addPopupEvListOpen(map, newMarker, newInfoWindow));
+			newMarker.addListener('mouseout', addPopupEvListClose(map, newMarker, newInfoWindow));
+			addedMarkers.push(newMarker);
+		}
+	}
+}
+
+function addPopupEvListOpen(map, marker, newInfoWindow){
+	return function(){
+		newInfoWindow.open(map, marker);
+	};
+}
+
+function addPopupEvListClose(map, marker, newInfoWindow){
+	return function(){
+		newInfoWindow.close(map, marker);
+	};
+}
+
+
+window.setTimeout(function(){$.getScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyAJC9iOp6rQeZiRGeXxIhE7zclIG8Diddk&callback=initMap&libraries=places', function()
+	{
+	});}, 500);
+
+</script>
+
 </div>
+</body>
+</html>
