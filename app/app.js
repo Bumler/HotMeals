@@ -278,9 +278,30 @@ warmMeal.controller('signUpController', function($scope, $location, WebcamServic
 	};
 });
 
-warmMeal.controller('loginController', function($scope){
+warmMeal.controller('loginController', function($scope, $location){
 	$scope.email = "";
 	$scope.password = "";
+
+	$scope.takingPhoto = true;
+
+
+        $scope.vm = this;
+        
+        $scope.showweb = true;
+        $scope.webcam = WebcamService.webcam;
+       
+        //override function for be call when capture is finalized
+        $scope.webcam.success = function(image, type) {
+            console.log("IMAGE = " + photo);
+            $scope.photo = image;
+            $scope.fotoContentType = type;
+            $scope.showweb = false;
+        };
+
+        function turnOffWebCam() {
+            if($scope.webcam && $scope.webcam.isTurnOn===true)
+                $scope.webcam.turnOff();
+        };
 
 	$scope.login = function(){
 		//TODO: Verify through facial recognition and then go to new page
@@ -296,6 +317,7 @@ warmMeal.controller('loginController', function($scope){
 		  alert(errorMessage);
 		});
 		console.log("user = " + user);
+		$location.path('/map');
 		return user;
 	}	
 
