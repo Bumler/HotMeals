@@ -164,6 +164,7 @@ warmMeal.controller('loginController', function($scope){
 });
 
 warmMeal.controller('mapController', function($scope, NgMap){
+	
 $scope.googleMapsUrl="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXCvRVF0uDHz353OEUE8_NhTSKh2p4DBI";
 
   NgMap.getMap().then(function(map) {
