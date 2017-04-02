@@ -1,6 +1,5 @@
 // Taking care of search bar 
-warmMeal.controller('mapController', function($scope){
-	$scope.message = "hi";
+
 
 		$("#foodpref-text-form")
 		.focus(function() {
@@ -123,4 +122,3 @@ warmMeal.controller('mapController', function($scope){
 			newInfoWindow.close(map, marker);
 		};
 	}
-});

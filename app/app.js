@@ -10,7 +10,8 @@ warmMeal.config(['$routeProvider', function($routeProvider){
 			templateUrl: 'views/map.html'
 		})
 		.when('/signup',{
-			templateUrl: 'views/signup.html'
+			templateUrl: 'views/signup.html',
+			controller: 'signUpController'
 		})
 		.when('/map',{
 			templateUrl: 'views/map.html'
@@ -27,4 +28,15 @@ warmMeal.config(['$routeProvider', function($routeProvider){
 
 warmMeal.controller('warmMealController', function($scope){
 	$scope.message = 'test';
+});
+
+warmMeal.controller('signUpController', function($scope){
+	$scope.name = "";
+	$scope.lastName = "";
+	$scope.email = "";
+	$scope.password = "";
+
+	$scope.submit = function(){
+		
+	};
 });
