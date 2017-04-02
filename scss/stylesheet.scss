@@ -6,8 +6,10 @@
   text-align: left;
 }
 
-p {
+.login-form {
   font-size: 18px;
+  background-color: #9a2d19;
+  color: #eee4d7;
 }
 
 .hero{
@@ -47,13 +49,6 @@ p {
   }
 
   .hero-text {
-    // position: absolute;
-    // z-index: 999;
-    color: #fff;
-
-    // top: 70%;
-    // left: 0;
-    // right: 0;
     text-align: center;
     // @media screen and (max-width: 768px) {
     //   top: 60%;
@@ -79,7 +74,6 @@ p {
 }
 
 .button {
-<<<<<<< HEAD
   padding: 16px 32px;
   text-align: center;
   text-decoration: none;
@@ -113,7 +107,6 @@ p {
     color: inherit; /* blue colors for links too */
     text-decoration: inherit; /* no underline */
   }
-=======
     padding: 16px 32px;
     text-align: center;
     text-decoration: none;
@@ -137,7 +130,6 @@ p {
 .button:hover {
     background-color: #eee4d7;
     color: #9a2d19;
->>>>>>> refs/remotes/origin/master
 }
 
 

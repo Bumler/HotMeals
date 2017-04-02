@@ -4,8 +4,10 @@
 .left-text {
   text-align: left; }
 
-p {
-  font-size: 18px; }
+.login-form {
+  font-size: 18px;
+  background-color: #9a2d19;
+  color: #eee4d7; }
 
 .hero {
   height: 100vh;
@@ -33,7 +35,6 @@ p {
     background-image: linear-gradient(to bottom right, #c73915, #e7b439);
     opacity: .8; }
   .hero .hero-text {
-    color: #fff;
     text-align: center; }
     .hero .hero-text h1 {
       font-size: 8rem;
@@ -60,14 +61,37 @@ p {
   transition-duration: 0.4s;
   cursor: pointer;
   font-size: 24px; }
-<<<<<<< HEAD
   .button a {
     color: inherit;
     /* blue colors for links too */
     text-decoration: inherit;
     /* no underline */ }
-=======
->>>>>>> refs/remotes/origin/master
+
+.button {
+  background-color: transparent;
+  color: #eee4d7;
+  border: 2px solid #eee4d7;
+  width: 250px; }
+
+.button:hover {
+  background-color: #eee4d7;
+  color: #9a2d19;
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  -webkit-transition-duration: 0.4s;
+  /* Safari */
+  transition-duration: 0.4s;
+  cursor: pointer;
+  font-size: 24px; }
+  .button:hover a {
+    color: inherit;
+    /* blue colors for links too */
+    text-decoration: inherit;
+    /* no underline */ }
 
 .button {
   background-color: transparent;
@@ -78,14 +102,6 @@ p {
 .button:hover {
   background-color: #eee4d7;
   color: #9a2d19; }
-<<<<<<< HEAD
-  .button:hover a {
-    color: inherit;
-    /* blue colors for links too */
-    text-decoration: inherit;
-    /* no underline */ }
-=======
->>>>>>> refs/remotes/origin/master
 
 .absolute {
   position: absolute; }
