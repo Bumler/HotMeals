@@ -35,14 +35,6 @@
 
 					<div class="row yy-margin ">
 
-<!--             <div ng-if="takingPhoto">
-             <webcam channel="vm.webcam.channel"
-                            on-streaming="vm.webcam.onSuccess()"
-                            on-error="vm.webcam.onError(err)"
-                            on-stream="vm.webcam.onStream(stream)">>
-           </webcam>
-         </div>     
-       -->
        <div id="webcam" ng-if="vm.showweb">
         <webcam channel="vm.webcam.channel"
         on-streaming="vm.webcam.onSuccess()"
@@ -52,16 +44,23 @@
         <canvas ng-hide="true" id="snapshot" width="200" height="200"></canvas>
       </div>
       <img data-ng-src="{{'data:' + vm.fotoContentType + ';base64,' + vm.photo}}" style="max-height: 100px;" ng-if="vm.photo"/>
+           <div id="webcam" ng-if="showweb">
+            <webcam channel="webcam.channel"
+            on-streaming="webcam.onSuccess()"
+            on-error="webcam.onError(err)"
+            on-stream="webcam.onStream(stream)"></webcam>
 
-      <div class="row">
-       <button type="button" class="button" style="width: 125px" ng-click="vm.webcam.makeSnapshot()"><span class="glyphicon glyphicon-camera"></span></button>
-     </div>
+            <button class="button" type="button" ng-click="webcam.makeSnapshot()" style="width: 125px"><span class="glyphicon glyphicon-camera"></span></button>
+            <canvas ng-hide="true" id="snapshot" width="200" height="200"></canvas>
+          </div>
+          
+            <img data-ng-src="{{'data:' + fotoContentType + ';base64,' + photo}}" style="max-height: 100px;" ng-if="photo"/>
 
-     <div class="row yy-margin">
-      <button type="button" class="button" ng-click="submit()">Create Account</button> 
-    </div>
-  </div>	      
-</div>
+          <div class="row yy-margin">
+            <button type="button" class="button" ng-click="submit">Create Account</button> 
+          </div>
+        </div>	      
+  </div>
 </div>
 </div>
 <div class="gradient"></div>
