@@ -112,6 +112,7 @@ warmMeal.controller('signUpController', function($scope, $location, WebcamServic
 		initialDate.setDate(initialDate.getDate()-1);
 		// var userId = firebase.auth().uid
 
+		var storageRef = firebase.storage().ref();
 		var database = firebase.database();
 		console.log("DATABASE = " + database);
 		console.log("userid = " + userId);
@@ -121,8 +122,34 @@ warmMeal.controller('signUpController', function($scope, $location, WebcamServic
 			email: $scope.email,
 			isBanned: false,
 			lastClaimedCode: initialDate
-		    // TODO: Send in photo url obtained from the camera once we integrate it with the signup process.
-		    // photoId: $scope.photoId
+		});
+
+		// Upload the file and metadata
+		var uploadTask = storageRef.child(photoId).put(file);
+		// Register three observers:
+		// 1. 'state_changed' observer, called any time the state changes
+		// 2. Error observer, called on failure
+		// 3. Completion observer, called on successful completion
+		uploadTask.on('state_changed', function(snapshot){
+		  // Observe state change events such as progress, pause, and resume
+		  // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+		  var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+		  console.log('Upload is ' + progress + '% done');
+		  switch (snapshot.state) {
+		    case firebase.storage.TaskState.PAUSED: // or 'paused'
+		      console.log('Upload is paused');
+		      break;
+		    case firebase.storage.TaskState.RUNNING: // or 'running'
+		      console.log('Upload is running');
+		      break;
+		  }
+		}, function(error) {
+		  // Handle unsuccessful uploads
+		  console.log('There was an error uploading your account');
+		}, function() {
+		  // Handle successful uploads on complete
+		  var downloadURL = uploadTask.snapshot.downloadURL;
+
 		});
 	}
 	function createAccount() {
@@ -182,6 +209,63 @@ warmMeal.controller('loginController', function($scope){
 		console.log("user = " + user);
 		return user;
 	}	
+
+	//Work for Microsoft's Face Recognition API
+  function facialRecognition() {
+      var faceIdFirebase = null;
+      var faceIdCurrentPicture = currentPhoto;
+        var params = {
+          // Request parameters
+
+          //dataType: "json",
+          //contentType: "application/json",
+          // "Ocp-Apim-Subscription-Key": “a528031d6c2e43478f9ae9cda40674b2”,
+        };
+      
+        $.ajax({
+            url: "https://westus.api.cognitive.microsoft.com/face/v1.0/verify?" + $.param(params),
+            beforeSend: function(xhrObj){
+                // Request headers
+                xhrObj.setRequestHeader("Content-Type","application/json");
+                xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key",“a528031d6c2e43478f9ae9cda40674b2”);
+            },
+            type: "POST",
+            // Request body
+            data: faceIdFirebase, faceIdCurrentPicture,
+        })
+        .done(function(data) {
+            alert("success");
+        })
+        .fail(function() {
+            alert("error");
+        });
+    }
+
+    function getBody(photoUrl) {
+      var params = {
+            // Request parameters
+            "returnFaceId": "true",
+            "returnFaceLandmarks": "false",
+        };
+      
+        $.ajax({
+            url: "https://westus.api.cognitive.microsoft.com/face/v1.0/detect?" + $.param(params),
+            beforeSend: function(xhrObj){
+                // Request headers
+                xhrObj.setRequestHeader("Content-Type","application/json");
+                xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key",“a528031d6c2e43478f9ae9cda40674b2”);
+            },
+            type: "POST",
+            // Request body
+            data: "photoUrl",
+        })
+        .done(function(data) {
+            alert("success");
+        })
+        .fail(function() {
+            alert("error");
+        });
+    }
 });
 
 warmMeal.controller('mapController', function($scope, NgMap){
