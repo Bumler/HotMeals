@@ -1,0 +1,37 @@
+.signup-form .input-group {
+	background-color:rgba(0,0,0,0);
+	border-color: 	transparent;
+	top: 3px;
+}
+
+.signup-form .signup-row {
+	margin-top: 3px;
+}
+
+.signup-form .signup-row .input-group-addon{
+	min-width: 200px;
+}
+
+.signup-form .signup-row .login-form{
+	top: 50px;
+	min-height: 2.5em;		
+
+	background-color: #9a2d19;
+	border-color: transparent;
+	color: #eee4d7;
+
+	font-size: 1.5em;
+}
+
+.signup-form .signup-row .form-control{
+	min-height: 2.5em;	
+
+	border-color: transparent;
+
+	font-size: 1.5em;
+}
+
+.signup-form .yy-margin {
+margin-top: 20px;
+}
+	
