@@ -146,10 +146,12 @@ warmMeal.controller('signUpController', function($scope, $location, WebcamServic
        
         //override function for be call when capture is finalized
         $scope.webcam.success = function(image, type) {
-            console.log("IMAGE = " + photo);
             $scope.photo = image;
             $scope.fotoContentType = type;
             $scope.showweb = false;
+            //trying to get photo data here see service at the top for other ideas
+            $scope.photoData = $scope.webcam.patData;
+            console.log(patData);
         };
 
         function turnOffWebCam() {
@@ -278,7 +280,7 @@ warmMeal.controller('signUpController', function($scope, $location, WebcamServic
 	};
 });
 
-warmMeal.controller('loginController', function($scope, $location){
+warmMeal.controller('loginController', function($scope, $location, WebcamService){
 	$scope.email = "";
 	$scope.password = "";
 
@@ -292,10 +294,12 @@ warmMeal.controller('loginController', function($scope, $location){
        
         //override function for be call when capture is finalized
         $scope.webcam.success = function(image, type) {
-            console.log("IMAGE = " + photo);
             $scope.photo = image;
             $scope.fotoContentType = type;
             $scope.showweb = false;
+                        //trying to get photo data here see service at the top for other ideas
+            $scope.photoData = $scope.webcam.patData;
+            console.log(patData);
         };
 
         function turnOffWebCam() {
