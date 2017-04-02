@@ -1,4 +1,4 @@
-var warmMeal = angular.module('warmMeal', ['ngRoute', 'ngMap']);
+var warmMeal = angular.module('warmMeal', ['ngRoute', 'ngMap', 'webcam']);
 
 
 warmMeal.config(['$routeProvider', function($routeProvider){
@@ -41,13 +41,34 @@ warmMeal.controller('availableController', function($scope){
 	$scope.date = "Tomorrow";
 });
 
-warmMeal.controller('signUpController', function($scope, $location){
+warmMeal.controller('signUpController', function($scope, $location, WebcamService){
+
 	$scope.name = "";
 	$scope.lastName = "";
 	$scope.email = "";
 	$scope.password = "";
 	$scope.confirmPassword = "";
 	$scope.photoId = null;
+
+	$scope.takingPhoto = true;
+
+
+        var vm = this;
+        
+        vm.showweb = true;
+        vm.webcam = WebcamService.webcam;
+        //override function for be call when capture is finalized
+        vm.webcam.success = function(image, type) {
+            vm.photo = image;
+            vm.fotoContentType = type;
+            vm.showweb = true;
+        };
+
+        function turnOffWebCam() {
+            if(vm.webcam && vm.webcam.isTurnOn===true)
+                vm.webcam.turnOff();
+        };
+  
 
 	function hasValidEntries(){
 		if(!$scope.name) {
