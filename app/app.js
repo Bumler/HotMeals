@@ -151,7 +151,7 @@ warmMeal.controller('signUpController', function($scope, $location, WebcamServic
             $scope.showweb = false;
             //trying to get photo data here see service at the top for other ideas
             $scope.photoData = $scope.webcam.patData;
-            console.log(patData);
+            console.log($scope.webcam.patData);
         };
 
         function turnOffWebCam() {
@@ -177,7 +177,7 @@ warmMeal.controller('signUpController', function($scope, $location, WebcamServic
 		} else if(!$scope.confirmPassword) {
 			alert('Password cannot be blank.');
 			return false;
-		} else if (!$scope.photoId){
+		} else if (!$scope.photoData){
 			alert('No photo was taken.');
 			return false;
 		} else if (!hasValidPassword()) {
@@ -212,36 +212,41 @@ warmMeal.controller('signUpController', function($scope, $location, WebcamServic
 			lastName: $scope.lastName,
 			email: $scope.email,
 			isBanned: false,
-			lastClaimedCode: initialDate
+			lastClaimedCode:  initialDate
 		});
+		//GINA
+
+		// var refImg = new Firebase()
+
+
 
 		// Upload the file and metadata
-		var uploadTask = storageRef.child(photoId).put(file);
-		// Register three observers:
-		// 1. 'state_changed' observer, called any time the state changes
-		// 2. Error observer, called on failure
-		// 3. Completion observer, called on successful completion
-		uploadTask.on('state_changed', function(snapshot){
-		  // Observe state change events such as progress, pause, and resume
-		  // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-		  var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-		  console.log('Upload is ' + progress + '% done');
-		  switch (snapshot.state) {
-		    case firebase.storage.TaskState.PAUSED: // or 'paused'
-		      console.log('Upload is paused');
-		      break;
-		    case firebase.storage.TaskState.RUNNING: // or 'running'
-		      console.log('Upload is running');
-		      break;
-		  }
-		}, function(error) {
-		  // Handle unsuccessful uploads
-		  console.log('There was an error uploading your account');
-		}, function() {
-		  // Handle successful uploads on complete
-		  var downloadURL = uploadTask.snapshot.downloadURL;
+		// var uploadTask = firebase.database().ref('users/' + userId).put($scope.photoData);
+		// // Register three observers:
+		// // 1. 'state_changed' observer, called any time the state changes
+		// // 2. Error observer, called on failure
+		// // 3. Completion observer, called on successful completion
+		// uploadTask.on('state_changed', function(snapshot){
+		//   // Observe state change events such as progress, pause, and resume
+		//   // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+		//   var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+		//   console.log('Upload is ' + progress + '% done');
+		//   switch (snapshot.state) {
+		//     case firebase.storage.TaskState.PAUSED: // or 'paused'
+		//       console.log('Upload is paused');
+		//       break;
+		//     case firebase.storage.TaskState.RUNNING: // or 'running'
+		//       console.log('Upload is running');
+		//       break;
+		//   }
+		// }, function(error) {
+		//   // Handle unsuccessful uploads
+		//   console.log('There was an error uploading your account');
+		// }, function() {
+		//   // Handle successful uploads on complete
+		//   var downloadURL = uploadTask.snapshot.downloadURL;
 
-		});
+		// });
 	}
 	function createAccount() {
 		var initialDate = new Date();
@@ -292,14 +297,14 @@ warmMeal.controller('loginController', function($scope, $location, WebcamService
         $scope.showweb = true;
         $scope.webcam = WebcamService.webcam;
        
-        //override function for be call when capture is finalized
+        //override function to be call when capture is finalized
         $scope.webcam.success = function(image, type) {
             $scope.photo = image;
             $scope.fotoContentType = type;
             $scope.showweb = false;
                         //trying to get photo data here see service at the top for other ideas
             $scope.photoData = $scope.webcam.patData;
-            console.log(patData);
+            console.log($scope.webcam.patData);
         };
 
         function turnOffWebCam() {
@@ -310,7 +315,7 @@ warmMeal.controller('loginController', function($scope, $location, WebcamService
 	$scope.login = function(){
 		//TODO: Verify through facial recognition and then go to new page
 		console.log("login pressed");
-		var user = firebaseSignIn();
+		firebaseSignIn();
 	};
 
 	function firebaseSignIn() {
@@ -319,16 +324,28 @@ warmMeal.controller('loginController', function($scope, $location, WebcamService
 		  var errorMessage = error.message;
 		  console.log("error logging in user: " + errorMessage);
 		  alert(errorMessage);
+		  return;
 		});
 		console.log("user = " + user);
-		$location.path('/map');
-		return user;
+		// if (facialRecognition()) {
+			$location.path('/map');
+		// } else {
+		// 	alert("face does not match image of account.");
+		// }
 	}	
 
 	//Work for Microsoft's Face Recognition API
   	function facialRecognition() {
-      var faceIdFirebase = null;
-      var faceIdCurrentPicture = currentPhoto;
+  		var storage = firebase.storage();
+		var pathReference = storage.ref('images/').getDownloadURL().then(function(url) {
+		  // `url` is the download URL for 'images/stars.jpg'
+
+		}).catch(function(error) {
+		  // Handle any errors
+		});
+
+	    var faceIdFirebase = null;
+	    var faceIdCurrentPicture = $scope.photoData;
         var params = {
           // Request parameters
 
@@ -349,10 +366,13 @@ warmMeal.controller('loginController', function($scope, $location, WebcamService
             data: faceIdFirebase, faceIdCurrentPicture,
         })
         .done(function(data) {
-            alert("success");
+        	console.log("Photo was recognized ");
+            return true
         })
         .fail(function() {
-            alert("error");
+            //error
+            console.log("Photo was NOT recognized ");
+            return false
         });
     }
 
