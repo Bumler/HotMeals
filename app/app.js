@@ -23,7 +23,8 @@ warmMeal.config(['$routeProvider', function($routeProvider){
 		controller: 'loginController'
 	})
 	.when('/verify',{
-		templateUrl: 'views/verifySelection.html'
+		templateUrl: 'views/verifySelection.html',
+		controller: 'verifyController'
 	})
 	.otherwise({
 		redirectTo: '/'
@@ -125,6 +126,26 @@ warmMeal.controller('warmMealController', function($scope){
 warmMeal.controller('availableController', function($scope){
 	$scope.time = "11:59 PM";
 	$scope.date = "Tomorrow";
+});
+
+warmMeal.controller('verifyController', function($scope){
+	$scope.confirm = function(){
+		$location.path('/');
+
+		firebase.auth().signOut().then(function() {
+		  // Sign-out successful.
+			console.log("logout successful");
+			$location.path('/');
+		  //TODO: go to login page
+		}).catch(function(error) {
+		  // An error happened.
+		  	console.log("logout failed");
+		});
+	}
+
+	$scope.cancel = function(){
+		$location.path('/map');
+	}
 });
 
 warmMeal.controller('signUpController', function($scope, $location, WebcamService){
